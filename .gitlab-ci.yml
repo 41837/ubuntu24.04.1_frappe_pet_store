@@ -1,9 +1,33 @@
+# image: alpine:latest
+
+# before_script:
+#   - apk add --no-cache git
+#   - git --version
+#   - git config --global http.sslVerify false
+
+# stages:
+#   - sync
+
+# sync_from_github:
+#   stage: sync
+#   script:
+#     - git remote remove github || true
+#     - git remote -v
+#     - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/41837/ubuntu24.04.1_frappe_pet_store.git || true
+#     - git remote -v
+#     - git branch -r
+#     - git fetch --all
+#     - git fetch github
+#     - git merge github/main --no-edit
+#     - git push origin main
+#   only:
+#     - main
+
 image: alpine:latest
 
 before_script:
   - apk add --no-cache git
   - git --version
-  - git config --global http.sslVerify false
 
 stages:
   - sync
@@ -11,14 +35,21 @@ stages:
 sync_from_github:
   stage: sync
   script:
+    # ตั้งค่า remote สำหรับ GitHub
     - git remote remove github || true
-    - git remote -v
     - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/41837/ubuntu24.04.1_frappe_pet_store.git || true
-    - git remote -v
-    - git branch -r
-    - git fetch --all
+
+    # ดึงโค้ดจาก GitHub
     - git fetch github
+    - git checkout main || git checkout -b main github/main
+
+    # เช็คว่า branch develop มีใน GitLab ไหม
+    - git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git
+    - git fetch gitlab develop || echo "GitLab develop branch not found, creating..."
+    - git checkout develop || git checkout -b develop
+
+    # Merge main → develop แล้ว push ไปที่ GitLab
     - git merge github/main --no-edit
-    - git push origin main
+    - git push gitlab develop
   only:
     - main
