@@ -30,3 +30,4 @@ sync_repo:
     - git push gitlab develop
   only:
     - develop
+  when: manual
