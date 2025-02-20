@@ -45,11 +45,6 @@ sync_from_github:
     - git fetch github
     - git checkout main || git checkout -b main github/main
 
-    # เช็คว่า branch develop มีใน GitLab ไหม
-    - git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git
-    - git fetch gitlab develop || echo "GitLab develop branch not found, creating..."
-    - git checkout develop || git checkout -b develop
-
     # Merge main → develop แล้ว push ไปที่ GitLab
     - git merge github/main --no-edit
     - git push gitlab develop
