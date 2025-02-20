@@ -18,16 +18,10 @@ sync_repo:
 
     # ดึงโค้ดจาก GitHub main
     - git fetch origin main
-    - git checkout main || git checkout -b main origin/main  # ถ้า main ไม่มี ให้สร้างใหม่
+    - git checkout main || git checkout -b main origin/main
 
-    # เช็คว่า branch develop มีใน GitLab ไหม
-    - git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git
-    - git fetch gitlab develop || echo "GitLab develop branch not found, creating..."
-    - git checkout develop || git checkout -b develop
-
-    # Merge main → develop แล้ว push ไปที่ GitLab
-    - git merge origin/main --allow-unrelated-histories
-    - git push gitlab develop
+    # Push โค้ดไปที่ GitLab develop
+    - git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git || true
+    - git push gitlab main:develop
   only:
-    - develop
-  when: manual
+    - schedules  # ให้ทำงานเฉพาะ Schedule เท่านั้น
