@@ -21,4 +21,4 @@ sync_from_github:
     - git merge github/main --no-edit
     - git push origin main
   only:
-    - main
+    - Develop
