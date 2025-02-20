@@ -9,6 +9,8 @@ stages:
 
 sync_from_github:
   stage: sync
+  before_script:
+    - git config --global http.sslVerify false
   script:
     - git remote remove github || true
     - git remote -v
