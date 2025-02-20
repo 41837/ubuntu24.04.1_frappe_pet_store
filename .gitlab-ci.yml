@@ -38,6 +38,8 @@ sync_from_github:
     # ตั้งค่า remote สำหรับ GitHub
     - git remote remove github || true
     - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/41837/ubuntu24.04.1_frappe_pet_store.git || true
+    - git remote -v
+    - git branch -r
 
     # ดึงโค้ดจาก GitHub
     - git fetch github
