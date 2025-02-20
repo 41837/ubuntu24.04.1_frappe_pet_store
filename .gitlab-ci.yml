@@ -13,6 +13,9 @@ sync_from_github:
     - git remote remove github || true
     - git remote -v
     - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/41837/ubuntu24.04.1_frappe_pet_store.git || true
+    - git remote -v
+    - git branch -r
+    - git fetch --all
     - git fetch github
     - git merge github/main --no-edit
     - git push origin main
