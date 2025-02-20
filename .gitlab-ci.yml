@@ -28,6 +28,7 @@ image: alpine:latest
 before_script:
   - apk add --no-cache git
   - git --version
+  - git config --global http.sslVerify fal
 
 stages:
   - sync
