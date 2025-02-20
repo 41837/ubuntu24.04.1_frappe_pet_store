@@ -1,8 +1,10 @@
-image: alpine:latest  # ใช้ Alpine Linux
+image: alpine:latest  # ใช้ Alpine Linux เป็น environment
 
 before_script:
-  - apk add --no-cache git  # ติดตั้ง Git
-  - git --version           # เช็คว่า Git ใช้งานได้
+  - apk add --no-cache git
+  - git --version
+  - git config --global user.name "GitLab CI"
+  - git config --global user.email "gitlab-ci@localhost"
 
 stages:
   - sync
@@ -10,16 +12,21 @@ stages:
 sync_repo:
   stage: sync
   script:
-    - git config --global user.name "GitLab CI"
-    - git config --global user.email "gitlab-ci@localhost"
-
-    # ลบ remote origin (ถ้ามีอยู่แล้ว) แล้วเพิ่มใหม่ให้เป็น GitHub
+    # ลบ remote origin (ถ้ามี) และเพิ่มใหม่ให้เป็น GitHub
     - git remote remove origin || true
     - git remote add origin https://oauth2:${GITHUB_TOKEN}@github.com/41837/ubuntu24.04.1_frappe_pet_store.git
 
-    # ดึงโค้ดจาก GitHub และ push ไป GitLab
+    # ดึงโค้ดจาก GitHub main
     - git fetch origin main
-    - git checkout -B develop origin/main  # Sync จาก GitHub main → GitLab develop
-    - git push gitlab develop  # push ไปที่ GitLab
+    - git checkout main || git checkout -b main origin/main  # ถ้า main ไม่มี ให้สร้างใหม่
+
+    # เช็คว่า branch develop มีใน GitLab ไหม
+    - git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git
+    - git fetch gitlab develop || echo "GitLab develop branch not found, creating..."
+    - git checkout develop || git checkout -b develop
+
+    # Merge main → develop แล้ว push ไปที่ GitLab
+    - git merge origin/main --allow-unrelated-histories
+    - git push gitlab develop
   only:
     - develop
