@@ -57,6 +57,7 @@ sync_from_github:
     - git remote add origin https://oauth2:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git
     - git remote -v
 
+    - git remote set-url origin https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git
     - git config --list
     - echo "GitLab Token is ${GITLAB_TOKEN}"
     - echo "Using GitLab Token - ${GITLAB_TOKEN:0:4}****"
