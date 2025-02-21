@@ -43,14 +43,10 @@ sync_from_github:
     # ตั้งค่า remote สำหรับ GitHub
     - git remote remove github || true
     - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/41837/ubuntu24.04.1_frappe_pet_store.git
-    - git remote -v
-    - git branch -r
 
     # ดึงโค้ดจาก GitHub
     - git fetch github
     - git checkout main || git checkout -b main github/main
-    - git status
-    - git pull --no-rebase github main
 
     # ตั้งค่า remote ใหม่ให้ GitLab ใช้ Token
     - git remote remove origin || true
@@ -59,12 +55,10 @@ sync_from_github:
 
     - git remote set-url origin https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git
     - git remote -v
-    - git config --list
-    - echo "GitLab Token is ${GITLAB_TOKEN}"
-    - echo "Using GitLab Token - ${GITLAB_TOKEN:0:4}****"
+
 
     # Merge main → develop แล้ว push ไปที่ GitLab
-    - git checkout -b develop || git checkout develop
+    - git fetch origin develop && git checkout develop || git checkout -b develop
     - git merge github/main --no-edit
     # - git push origin develop
   only:
