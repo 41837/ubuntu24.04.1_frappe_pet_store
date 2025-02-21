@@ -48,6 +48,6 @@ sync_from_github:
 
     # Merge main → develop แล้ว push ไปที่ GitLab
     - git merge github/main --no-edit
-    - git push gitlab develop
+    - git push origin develop
   only:
     - main
