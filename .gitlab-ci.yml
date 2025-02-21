@@ -1,4 +1,4 @@
-image: alpine:latest
+image: ubuntu:latest
 
 before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
@@ -13,7 +13,6 @@ before_script:
 
     - eval $(ssh-agent -s)
     - ssh-add ~/.ssh/id_ed25519.pub
-
 
 stages:
   - sync
