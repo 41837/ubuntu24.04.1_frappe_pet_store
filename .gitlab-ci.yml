@@ -24,11 +24,12 @@ sync_from_github:
   script:
     - ls -la
     - git remote -v
-    - git fetch github
-    - echo "testing..."
     - echo "Hostname of the machine:"
     - hostname
     - echo "Uptime of the machine:"
     - uptime
+    - git fetch github
+    - echo "testing..."
+
   only:
     - main
