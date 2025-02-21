@@ -50,7 +50,7 @@ sync_from_github:
     - git fetch github
     - git checkout main || git checkout -b main github/main
     - git status
-    - git pull --rebase github main
+    - git pull --no-rebase github main
 
     # ตั้งค่า remote ใหม่ให้ GitLab ใช้ Token
     - git remote remove origin || true
