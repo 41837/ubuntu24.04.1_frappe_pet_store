@@ -1,27 +1,42 @@
 image: ubuntu:latest
 
-before_script:
-  - apt-get update -y
-  - apt-get install -y openssh-client libssl-dev
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMuoEpiwmPhS9qXs5N/rZsPgMVJmpcM/+07RkbrNQLlb developer.swp@frappe.local" > ~/.ssh/id_ed25519
-  - chmod 600 ~/.ssh/id_ed25519
-  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  - chmod 600 ~/.ssh/config
-  - ssh-keyscan -H 10.1.112.134 >> ~/.ssh/known_hosts
-  - chmod 600 ~/.ssh/known_hosts
-
-  - export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no"
-  - git pull
-
-
 stages:
+  - setup
   - sync
+  - deploy
 
-sync_from_github:
-  stage: sync
+# Stage สำหรับเตรียม environment
+setup_ssh:
+  stage: ssh
   script:
-    - echo "testing..."
+    - apt-get update -y
+    - apt-get install -y openssh-client libssl-dev
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMuoEpiwmPhS9qXs5N/rZsPgMVJmpcM/+07RkbrNQLlb developer.swp@frappe.local" > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - chmod 600 ~/.ssh/config
+    - ssh-keyscan -H 10.1.112.134 >> ~/.ssh/known_hosts
+    - chmod 600 ~/.ssh/known_hosts
+    - export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no"
+  only:
+    - main
+
+# Stage สำหรับดึงข้อมูลจาก Git repository
+setup_git:
+  stage: git
+  script:
+    - sudo apt install git
+    - git --version
+  only:
+    - main
+
+# Stage สำหรับการ deploy หรือการส่งข้อมูลไปยังเครื่องอื่น
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to the server..."
+    - # คำสั่ง deploy ที่คุณต้องการ
   only:
     - main
