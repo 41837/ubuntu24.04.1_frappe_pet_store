@@ -1,19 +1,17 @@
 image: ubuntu:latest
 
 before_script:
-  - apt-get update -y
-  - apt-get install -y openssh-client libssl-dev
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
-  - echo "your-ssh-public-key" > ~/.ssh/id_ed25519
+  - echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMuoEpiwmPhS9qXs5N/rZsPgMVJmpcM/+07RkbrNQLlb developer.swp@frappe.local" > ~/.ssh/id_ed25519
   - chmod 600 ~/.ssh/id_ed25519
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - chmod 600 ~/.ssh/config
   - ssh-keyscan -H 10.1.112.134 >> ~/.ssh/known_hosts
   - chmod 600 ~/.ssh/known_hosts
-  
-  - eval $(ssh-agent -s)
-  - ssh-add ~/.ssh/id_ed25519
+
+  - export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no"
+  - git pull
 
 
 stages:
