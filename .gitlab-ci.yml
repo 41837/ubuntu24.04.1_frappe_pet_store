@@ -29,6 +29,8 @@ before_script:
   - apk add --no-cache git
   - git --version
   - git config --global http.sslVerify false
+  - git config --global user.name "GitLab CI"
+  - git config --global user.email "gitlab-ci@localhost"
 
 stages:
   - sync
