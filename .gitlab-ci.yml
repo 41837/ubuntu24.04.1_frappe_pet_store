@@ -23,6 +23,8 @@ sync_from_github:
   stage: sync
   script:
     - ls -la
+    - git remote -v
+    - git fetch github
     - echo "testing..."
   only:
     - main
