@@ -50,6 +50,7 @@ sync_from_github:
     - git fetch github
     - git checkout main || git checkout -b main github/main
     - git status
+    - git pull
 
     # ตั้งค่า remote ใหม่ให้ GitLab ใช้ Token
     - git remote remove origin || true
@@ -58,6 +59,7 @@ sync_from_github:
 
     - git config --list
     - echo "GitLab Token is ${GITLAB_TOKEN}"
+    - echo "Using GitLab Token - ${GITLAB_TOKEN:0:4}****"
 
     # Merge main → develop แล้ว push ไปที่ GitLab
     - git checkout -b develop || git checkout develop
