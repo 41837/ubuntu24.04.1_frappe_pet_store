@@ -1,6 +1,8 @@
 image: ubuntu:latest
 
 before_script:
+  - apt-get update -y
+  - apt-get install -y openssh-client libssl-dev
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
   - echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMuoEpiwmPhS9qXs5N/rZsPgMVJmpcM/+07RkbrNQLlb developer.swp@frappe.local" > ~/.ssh/id_ed25519
