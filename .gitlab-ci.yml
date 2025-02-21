@@ -5,7 +5,7 @@ before_script:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "${Ubuntu314_SSH_ED25519}" > ~/.ssh/id_ed25519
-    - chmod 600 ~/.ssh/id_ed25519.pub
+    - chmod 600 ~/.ssh/id_ed25519
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - chmod 600 ~/.ssh/config
     - ssh-keyscan -H 10.1.112.134 >> ~/.ssh/known_hosts
