@@ -20,7 +20,7 @@ sync_from_github:
     - git remote -v
 
     # Merge between repository
-    - git fetch github main
+    - git fetch github
     - git status
     - git diff github/main origin/main
 
