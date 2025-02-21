@@ -2,12 +2,11 @@ image: ubuntu:latest
 
 stages:
   - setup
-  - sync
   - deploy
 
 # Stage สำหรับเตรียม environment
 setup_ssh:
-  stage: ssh
+  stage: setup
   script:
     - apt-get update -y
     - apt-get install -y openssh-client libssl-dev
@@ -25,7 +24,7 @@ setup_ssh:
 
 # Stage สำหรับดึงข้อมูลจาก Git repository
 setup_git:
-  stage: git
+  stage: setup
   script:
     - sudo apt install git
     - git --version
