@@ -15,8 +15,12 @@ sync_from_github:
     - git remote remove github || true
     - git remote add github git@github.com:41837/ubuntu24.04.1_frappe_pet_store.git
 
+    #Debug ssh
+    - ssh -V
+
     # GitHub step
-    - git fetch github
+    - git remote -v
+    # - git fetch github
 
   only:
     - main
