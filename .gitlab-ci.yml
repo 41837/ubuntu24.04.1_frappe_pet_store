@@ -1,18 +1,20 @@
 image: ubuntu:latest
 
 before_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "${Ubuntu314_SSH_ED25519}" > ~/.ssh/id_ed25519
-    - chmod 600 ~/.ssh/id_ed25519
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - chmod 600 ~/.ssh/config
-    - ssh-keyscan -H 10.1.112.134 >> ~/.ssh/known_hosts
-    - chmod 600 ~/.ssh/known_hosts
+  - apt-get update -y
+  - apt-get install -y openssh-client libssl-dev
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo "your-ssh-public-key" > ~/.ssh/id_ed25519
+  - chmod 600 ~/.ssh/id_ed25519
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  - chmod 600 ~/.ssh/config
+  - ssh-keyscan -H 10.1.112.134 >> ~/.ssh/known_hosts
+  - chmod 600 ~/.ssh/known_hosts
+  
+  - eval $(ssh-agent -s)
+  - ssh-add ~/.ssh/id_ed25519
 
-    - eval $(ssh-agent -s)
-    - ssh-add ~/.ssh/id_ed25519
 
 stages:
   - sync
