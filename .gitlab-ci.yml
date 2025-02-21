@@ -22,6 +22,7 @@ stages:
 sync_from_github:
   stage: sync
   script:
+    - ls -la
     - echo "testing..."
   only:
     - main
