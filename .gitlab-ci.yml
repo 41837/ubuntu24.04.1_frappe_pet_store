@@ -2,7 +2,6 @@ image: alpine:latest
 
 before_script:
   - apk add --no-cache git
-  - which ssh || (echo "SSH not found" && exit 1)
   - apk add --no-cache openssh-client
   - git config --global user.name "tin.t"
   - git config --global user.email "tin.t@srisawadpower.com"
