@@ -13,7 +13,7 @@ before_script:
   - chmod 600 ~/.ssh/known_hosts
   - export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no"
 
-  - sudo apt install git
+  - apt install git
   - git --version
 
 stages:
