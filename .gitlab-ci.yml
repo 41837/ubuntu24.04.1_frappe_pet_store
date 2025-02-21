@@ -45,6 +45,7 @@ sync_from_github:
     # ดึงโค้ดจาก GitHub
     - git fetch github
     - git checkout main || git checkout -b main github/main
+    - git status
 
     # Merge main → develop แล้ว push ไปที่ GitLab
     - git merge github/main --no-edit
