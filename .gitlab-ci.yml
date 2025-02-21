@@ -23,6 +23,8 @@
 #   only:
 #     - main
 
+
+
 image: alpine:latest
 
 before_script:
@@ -40,7 +42,7 @@ sync_from_github:
   script:
     # ตั้งค่า remote สำหรับ GitHub
     - git remote remove github || true
-    - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/41837/ubuntu24.04.1_frappe_pet_store.git || true
+    - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/41837/ubuntu24.04.1_frappe_pet_store.git
     - git remote -v
     - git branch -r
 
@@ -49,8 +51,18 @@ sync_from_github:
     - git checkout main || git checkout -b main github/main
     - git status
 
+    # ตั้งค่า remote ใหม่ให้ GitLab ใช้ Token
+    - git remote remove origin || true
+    - git remote add origin https://oauth2:${GITLAB_TOKEN}@gitlab.srisawadpower.com/frappe/training/pet_store.git
+    - git remote -v
+
+    - git config --list
+    - echo "GitLab Token is ${GITLAB_TOKEN}"
+
     # Merge main → develop แล้ว push ไปที่ GitLab
+    - git checkout -b develop || git checkout develop
     - git merge github/main --no-edit
     - git push origin develop
   only:
     - main
+
