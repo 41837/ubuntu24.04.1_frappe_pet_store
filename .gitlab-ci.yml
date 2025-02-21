@@ -22,13 +22,9 @@ stages:
 sync_from_github:
   stage: sync
   script:
+    - ssh -o StrictHostKeyChecking=no user@10.1.112.134 "echo 'Successfully connected to Ubuntu!'"
     - ls -la
     - git remote -v
-    - echo "Hostname of the machine:"
-    - hostname
-    - echo "Uptime of the machine:"
-    - uptime
-    - git fetch github
     - echo "testing..."
 
   only:
