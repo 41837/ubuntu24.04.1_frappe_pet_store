@@ -4,6 +4,8 @@ Pet Store System
 
 ### Installation
 
+### Test
+
 You can install this app using the [bench](https://github.com/frappe/bench) CLI:
 
 ```bash
